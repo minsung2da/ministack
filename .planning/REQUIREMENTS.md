@@ -113,57 +113,57 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | TBD | Pending |
-| FOUND-02 | TBD | Pending |
-| FOUND-03 | TBD | Pending |
-| FOUND-04 | TBD | Pending |
-| NAV-01 | TBD | Pending |
-| NAV-02 | TBD | Pending |
-| NAV-03 | TBD | Pending |
-| NAV-04 | TBD | Pending |
-| NAV-05 | TBD | Pending |
-| CRUD-01 | TBD | Pending |
-| CRUD-02 | TBD | Pending |
-| CRUD-03 | TBD | Pending |
-| CRUD-04 | TBD | Pending |
-| CRUD-05 | TBD | Pending |
-| CRUD-06 | TBD | Pending |
-| EC2-01 | TBD | Pending |
-| EC2-02 | TBD | Pending |
-| EC2-03 | TBD | Pending |
-| EC2-04 | TBD | Pending |
-| EC2-05 | TBD | Pending |
-| EC2-06 | TBD | Pending |
-| S3-01 | TBD | Pending |
-| S3-02 | TBD | Pending |
-| S3-03 | TBD | Pending |
-| S3-04 | TBD | Pending |
-| LAM-01 | TBD | Pending |
-| LAM-02 | TBD | Pending |
-| LAM-03 | TBD | Pending |
-| DDB-01 | TBD | Pending |
-| DDB-02 | TBD | Pending |
-| DDB-03 | TBD | Pending |
-| SQS-01 | TBD | Pending |
-| SQS-02 | TBD | Pending |
-| SQS-03 | TBD | Pending |
-| GEN-01 | TBD | Pending |
-| GEN-02 | TBD | Pending |
-| GEN-03 | TBD | Pending |
-| DISP-01 | TBD | Pending |
-| DISP-02 | TBD | Pending |
-| DISP-03 | TBD | Pending |
-| DISP-04 | TBD | Pending |
-| DISP-05 | TBD | Pending |
-| DISP-06 | TBD | Pending |
-| DIFF-01 | TBD | Pending |
-| DIFF-02 | TBD | Pending |
+| FOUND-01 | Phase 1 | Pending |
+| FOUND-02 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Pending |
+| FOUND-04 | Phase 1 | Pending |
+| NAV-01 | Phase 1 | Pending |
+| NAV-02 | Phase 1 | Pending |
+| NAV-03 | Phase 1 | Pending |
+| NAV-04 | Phase 1 | Pending |
+| NAV-05 | Phase 1 | Pending |
+| CRUD-01 | Phase 2 | Pending |
+| CRUD-02 | Phase 2 | Pending |
+| CRUD-03 | Phase 2 | Pending |
+| CRUD-04 | Phase 2 | Pending |
+| CRUD-05 | Phase 2 | Pending |
+| CRUD-06 | Phase 2 | Pending |
+| EC2-01 | Phase 2 | Pending |
+| EC2-02 | Phase 2 | Pending |
+| EC2-03 | Phase 2 | Pending |
+| EC2-04 | Phase 2 | Pending |
+| EC2-05 | Phase 2 | Pending |
+| EC2-06 | Phase 2 | Pending |
+| S3-01 | Phase 3 | Pending |
+| S3-02 | Phase 3 | Pending |
+| S3-03 | Phase 3 | Pending |
+| S3-04 | Phase 3 | Pending |
+| LAM-01 | Phase 3 | Pending |
+| LAM-02 | Phase 3 | Pending |
+| LAM-03 | Phase 3 | Pending |
+| DDB-01 | Phase 4 | Pending |
+| DDB-02 | Phase 4 | Pending |
+| DDB-03 | Phase 4 | Pending |
+| SQS-01 | Phase 4 | Pending |
+| SQS-02 | Phase 4 | Pending |
+| SQS-03 | Phase 4 | Pending |
+| GEN-01 | Phase 4 | Pending |
+| GEN-02 | Phase 4 | Pending |
+| GEN-03 | Phase 4 | Pending |
+| DISP-01 | Phase 5 | Pending |
+| DISP-02 | Phase 5 | Pending |
+| DISP-03 | Phase 5 | Pending |
+| DISP-04 | Phase 5 | Pending |
+| DISP-05 | Phase 5 | Pending |
+| DISP-06 | Phase 5 | Pending |
+| DIFF-01 | Phase 5 | Pending |
+| DIFF-02 | Phase 5 | Pending |
 
 **Coverage:**
 - v1 requirements: 45 total
-- Mapped to phases: 0
-- Unmapped: 45
+- Mapped to phases: 45
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-04-05*
-*Last updated: 2026-04-05 after initial definition*
+*Last updated: 2026-04-05 after roadmap creation*
