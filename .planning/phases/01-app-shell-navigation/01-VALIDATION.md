@@ -41,7 +41,7 @@ created: 2026-04-07
 
 | Task ID | Plan | Wave | Requirement | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|-----------|-------------------|-------------|--------|
-| TBD | TBD | 0 | FOUND-01..04 | regression | `pytest tests/test_console_route.py -q` | ❌ W0 | ⬜ pending |
+| TBD | TBD | 0 | FOUND-01..04 | regression | `pytest tests/test_console_serve.py -q` | ❌ W0 | ⬜ pending |
 | TBD | TBD | 0 | NAV-01..05 | unit | `cd web && npm test -- --run` | ❌ W0 | ⬜ pending |
 | TBD | TBD | 5 | NAV-01..04 | e2e | `cd web && npx playwright test` | ❌ W0 | ⬜ pending |
 
@@ -54,7 +54,7 @@ created: 2026-04-07
 - [ ] `web/vitest.config.ts` + `web/src/test-setup.ts` — vitest + RTL config
 - [ ] `web/playwright.config.ts` — Playwright config (baseURL, Chromium project)
 - [ ] `npx playwright install chromium` — browser binary
-- [ ] `tests/test_console_route.py` — pytest stubs verifying `/_console/` routes return SPA, AWS API hostnames untouched
+- [ ] `tests/test_console_serve.py` — pytest stubs verifying `/_console/` routes return SPA, AWS API hostnames untouched
 - [ ] `tests/test_existing_aws_apis.py` — regression smoke for S3 / EC2 / Lambda / DynamoDB / SQS endpoints
 - [ ] `web/src/__tests__/AppShell.test.tsx` — AppLayout shell render stub
 - [ ] `web/src/__tests__/ServiceSearch.test.tsx` — Autosuggest stub
