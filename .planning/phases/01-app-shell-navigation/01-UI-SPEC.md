@@ -111,7 +111,20 @@ Cloudscape exposes spacing tokens via `@cloudscape-design/design-tokens`. **Alwa
 | Main content min width | 720px | Below this, sidebar auto-collapses (Cloudscape behaviour) |
 | Main content max width | none — fluid | Desktop-first per NAV-05 |
 
-**Exceptions:** none. Phase 1 never hardcodes a px value. If a Cloudscape component does not expose a slot for the gap you need, the answer is "use the next-larger token," not a custom value.
+**Design system exception:** Cloudscape's token scale supersedes the GSD standard spacing set (4, 8, 16, 24, 32, 48, 64) for this project. Cloudscape tokens are all multiples of 4, internally consistent with each other, and tuned for AWS Console density. The project explicitly rejected Tailwind/shadcn (per STACK.md: "Cloudscape provides all styling. Adding Tailwind would fight the design system"), so adopting Cloudscape's native scale is the only coherent option — substituting GSD's standard set would force per-component overrides that fight the design system.
+
+The following non-standard values are justified Cloudscape exceptions and are permitted in Phase 1:
+
+| Value | Source | Justification |
+|-------|--------|---------------|
+| 12px | `spaceScaledS` | Cloudscape canonical inline form gap token |
+| 20px | `spaceScaledL` | Cloudscape canonical header-to-body gap token |
+| 40px | `spaceScaledXxxl` | Cloudscape canonical page-level rhythm token |
+| 56px | TopNavigation height | Cloudscape-fixed header height — not configurable |
+| 280px | Sidebar width | Cloudscape-fixed navigation width — not configurable in Phase 1 |
+| 720px | Main content min width | Cloudscape-fixed responsive breakpoint for sidebar auto-collapse |
+
+Phase 1 never hardcodes a px value in components — every value above is consumed via the Cloudscape token (CSS custom property or JS export) or through a Cloudscape component that applies the token internally. If a Cloudscape component does not expose a slot for the gap you need, the answer is "use the next-larger token," not a custom value.
 
 ---
 
@@ -125,6 +138,8 @@ Cloudscape ships a typographic scale tuned for AWS Console. Phase 1 uses exactly
 | Label | `--awsui-font-size-body-s` | 12px | 700 | 16px (1.33) | KeyValuePairs labels, sidebar section group titles, status pill labels |
 | Heading | `--awsui-font-size-heading-m` | 18px | 700 | 22px (1.22) | Service home page Header (`<Header variant="h2">`) |
 | Display | `--awsui-font-size-heading-xl` | 24px | 700 | 30px (1.25) | Top-level page Header (`<Header variant="h1">`) — used only on the console root `/` landing page |
+
+**Note on Body / Label proximity (12px ↔ 14px):** The 2px gap between Label (12px) and Body (14px) is intentional and is preserved from Cloudscape's canonical token scale. Cloudscape assigns these two tokens distinct semantic roles — `body-s` is reserved for secondary metadata labels (KeyValuePairs labels, sidebar section group titles, status pill captions), while `body-m` is the default reading text. The visual contrast comes from the weight pairing (700 bold vs 400 regular), not from a larger size delta. Substituting either token with a value outside Cloudscape's scale would break component-internal styling (Cloudscape's `KeyValuePairs`, `StatusIndicator`, and `SideNavigation` components hardcode these tokens internally). This pairing is therefore accepted as a Cloudscape design system convention.
 
 **Font family (locked):** `"Open Sans", "Helvetica Neue", Roboto, Arial, sans-serif` (Cloudscape default). Loaded by `@cloudscape-design/global-styles` — do not import a separate font.
 
@@ -244,7 +259,7 @@ All user-facing copy is **English only** in Phase 1 (i18n is not in scope). Copy
 | Service home loading state | (no copy — Cloudscape `<Spinner>` only) |
 | Service home error state heading (Alert) | `Could not load resources` |
 | Service home error state body (Alert) | `MiniStack returned an error while reading {serviceDisplayName} state. Check that the service is enabled and try again.` |
-| Service home error retry button | `Retry` |
+| Service home error retry button | `Try Again` |
 | 404 page heading | `Page not found` |
 | 404 page body | `The page you are looking for does not exist in the MiniStack console.` |
 | 404 page link | `Go to Console Home` |
@@ -277,7 +292,7 @@ All user-facing copy is **English only** in Phase 1 (i18n is not in scope). Copy
 | Resize below 720px main width | Sidebar auto-collapses to icon-only mode | Cloudscape `AppLayout` default behaviour |
 | Service home loads | Show `<Spinner>` while React Query is fetching, then render KeyValuePairs | `<Suspense>` + `useQuery` `isLoading` |
 | Service home fails to load | Render `<Alert type="error">` with retry button | TanStack Query `error` state + `refetch()` |
-| Click "Retry" on error alert | Re-run the failed query | `refetch()` |
+| Click "Try Again" on error alert | Re-run the failed query | `refetch()` |
 | Manual refresh | NOT in Phase 1 (Phase 2 / CRUD-06). Phase 1 relies on React Query default `refetchOnWindowFocus` | n/a |
 | Keyboard: `/` | Focus service search | Custom hotkey (Phase 1 nice-to-have, plan can defer) |
 | Keyboard: `Esc` in search | Clear and blur search | `Autosuggest` default |
