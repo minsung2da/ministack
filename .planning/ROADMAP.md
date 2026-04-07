@@ -31,12 +31,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   4. Existing AWS CLI/SDK calls to port 4566 continue working exactly as before
   5. Service home pages show resource count summaries (even if zero) and the layout does not break on a standard laptop screen
 **Plans**: 6 plans
-- [ ] 01-PLAN-01-test-scaffold-and-smoke.md — Wave 0 test scaffolding, Cloudscape+React 19 smoke
-- [ ] 01-PLAN-02-backend-asgi-integration.md — _serve_console() + /_console/api/services + package-data (FOUND-01/03/04)
-- [ ] 01-PLAN-03-frontend-scaffold.md — Vite/React 19 entry + router + shared libs (FOUND-02)
-- [ ] 01-PLAN-04-app-shell-components.md — ConsoleShell + TopBar + Sidebar + Breadcrumbs (NAV-01/02/03/05)
-- [ ] 01-PLAN-05-pages-and-resource-counts.md — ConsoleHome + ServiceHome + counts.ts (NAV-04)
-- [ ] 01-PLAN-06-build-pipeline-and-e2e.md — Multi-stage Dockerfile + Makefile + Playwright E2E
+- [ ] 01-test-scaffold-and-smoke-PLAN.md — Wave 0 test scaffolding, Cloudscape+React 19 smoke
+- [ ] 02-backend-asgi-integration-PLAN.md — _serve_console() + /_console/api/services + package-data (FOUND-01/03/04)
+- [ ] 03-frontend-scaffold-PLAN.md — Vite/React 19 entry + router + shared libs (FOUND-02)
+- [ ] 04-app-shell-components-PLAN.md — ConsoleShell + TopBar + Sidebar + Breadcrumbs (NAV-01/02/03/05)
+- [ ] 05-pages-and-resource-counts-PLAN.md — ConsoleHome + ServiceHome + counts.ts (NAV-04)
+- [ ] 06-build-pipeline-and-e2e-PLAN.md — Multi-stage Dockerfile + Makefile + Playwright E2E
 **UI hint**: yes
 
 ### Phase 2: EC2 Dashboard & CRUD Patterns
