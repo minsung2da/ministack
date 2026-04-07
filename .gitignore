@@ -50,3 +50,14 @@ data/
 
 # Logs
 *.log
+
+# Frontend
+web/node_modules/
+web/dist/
+web/.vite/
+web/playwright-report/
+web/test-results/
+web/playwright/.cache/
+
+# Built SPA output (shipped by pip via package-data)
+ministack/static/console/
