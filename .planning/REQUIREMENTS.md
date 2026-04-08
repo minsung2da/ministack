@@ -7,10 +7,10 @@
 
 ### Foundation (앱 셸 & 인프라)
 
-- [ ] **FOUND-01**: 기존 4566 포트에서 `/_console/` 경로로 웹 UI를 서빙한다
+- [x] **FOUND-01**: 기존 4566 포트에서 `/_console/` 경로로 웹 UI를 서빙한다
 - [x] **FOUND-02**: React 19 + Cloudscape v3 + Vite 6 기반 SPA를 빌드하고 ASGI 미들웨어로 정적 파일을 서빙한다
-- [ ] **FOUND-03**: 기존 AWS API 에뮬레이션 라우팅에 영향을 주지 않는다
-- [ ] **FOUND-04**: Console API (`/_console/api/`)가 서비스 모듈 상태를 직접 읽어 UI 친화적 JSON을 반환한다
+- [x] **FOUND-03**: 기존 AWS API 에뮬레이션 라우팅에 영향을 주지 않는다
+- [x] **FOUND-04**: Console API (`/_console/api/`)가 서비스 모듈 상태를 직접 읽어 UI 친화적 JSON을 반환한다
 
 ### Navigation (글로벌 네비게이션)
 
@@ -113,10 +113,10 @@
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| FOUND-01 | Phase 1 | Pending |
+| FOUND-01 | Phase 1 | Complete |
 | FOUND-02 | Phase 1 | Complete |
-| FOUND-03 | Phase 1 | Pending |
-| FOUND-04 | Phase 1 | Pending |
+| FOUND-03 | Phase 1 | Complete |
+| FOUND-04 | Phase 1 | Complete |
 | NAV-01 | Phase 1 | Pending |
 | NAV-02 | Phase 1 | Pending |
 | NAV-03 | Phase 1 | Pending |
