@@ -58,6 +58,10 @@ web/.vite/
 web/playwright-report/
 web/test-results/
 web/playwright/.cache/
+web/*.tsbuildinfo
+web/.tsbuildinfo-node/
+web/vite.config.d.ts
+web/playwright.config.d.ts
 
 # Built SPA output (shipped by pip via package-data)
 ministack/static/console/
