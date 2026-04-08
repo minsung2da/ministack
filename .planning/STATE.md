@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Phase 1 UI-SPEC approved
-last_updated: "2026-04-07T10:57:51.775Z"
-last_activity: 2026-04-07 -- Phase null planning complete
+stopped_at: Completed 01-01-PLAN.md (test scaffold + smoke)
+last_updated: "2026-04-08T12:01:17.377Z"
+last_activity: 2026-04-08
 progress:
   total_phases: 5
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
-  percent: 0
+  total_plans: 6
+  completed_plans: 1
+  percent: 17
 ---
 
 # Project State
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-04-05)
 
 **Core value:** Browse and manage all emulated AWS resources visually from the browser, like the real AWS Console.
-**Current focus:** Phase 1 - App Shell & Navigation
+**Current focus:** Phase 01 — app-shell-navigation
 
 ## Current Position
 
-Phase: 1 of 5 (App Shell & Navigation)
-Plan: 0 of TBD in current phase
+Phase: 01 (app-shell-navigation) — EXECUTING
+Plan: 2 of 6
 Status: Ready to execute
-Last activity: 2026-04-07 -- Phase null planning complete
+Last activity: 2026-04-08
 
 Progress: [..........] 0%
 
@@ -52,6 +52,7 @@ Progress: [..........] 0%
 - Trend: -
 
 *Updated after each plan completion*
+| Phase 01 P01 | ~15m (active) | 3 tasks | 23 files |
 
 ## Accumulated Context
 
@@ -63,6 +64,10 @@ Recent decisions affecting current work:
 - Roadmap: EC2 chosen as first service (most complex at 3,175 lines -- proves all patterns)
 - Roadmap: DDB+SQS built with generic framework to validate schema-driven approach before scaling to 30+ services
 - Roadmap: DISP requirements deferred to Phase 5 (cross-cutting polish after core services exist)
+- [Phase 01]: Pin vite@6.4.2 / ts@5.9.3 / ky@1.14.3 / vitest@3.2.4 (not npm latest) to honor CLAUDE.md stack lock
+- [Phase 01]: Cloudscape components 3.0.1266 empirically React 19 compatible (automated Playwright smoke, 0 console errors)
+- [Phase 01]: Scope vitest include to src/**/*.{test,spec}.{ts,tsx} and exclude e2e/** so Playwright owns its files alone
+- [Phase 01]: FOUND-03 regression baseline uses in-process ASGI helper (no live :4566 needed) instead of boto3 integration fixtures
 
 ### Pending Todos
 
@@ -75,6 +80,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-07T09:47:12.112Z
-Stopped at: Phase 1 UI-SPEC approved
-Resume file: .planning/phases/01-app-shell-navigation/01-UI-SPEC.md
+Last session: 2026-04-08T12:01:17.342Z
+Stopped at: Completed 01-01-PLAN.md (test scaffold + smoke)
+Resume file: None
