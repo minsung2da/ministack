@@ -629,10 +629,13 @@ async def _serve_console(path: str, method: str, send) -> bool:
                 "Cache-Control": cache,
             }, body)
             return True
-        # File under /_console/assets/* that doesn't exist -> 404 (not SPA fallback)
-        if rel.startswith("assets/"):
-            await _send_response(send, 404, {"Content-Type": "text/plain"}, b"Not Found")
-            return True
+
+    # File under /_console/assets/* that doesn't exist -> 404 (not SPA fallback).
+    # This check runs even when the static/console dir is missing entirely, so
+    # missing hashed assets return 404 instead of a 503 "not built" stub.
+    if rel.startswith("assets/"):
+        await _send_response(send, 404, {"Content-Type": "text/plain"}, b"Not Found")
+        return True
 
     # SPA fallback: serve index.html for any unmatched /_console/* GET
     index = _CONSOLE_ROOT / "index.html"
