@@ -17,9 +17,13 @@ export function renderWithProviders(
 ) {
   const { route = '/', ...rest } = opts
   const client = makeTestQueryClient()
+  // MemoryRouter requires the initial entry to include the basename, otherwise
+  // React Router refuses to render the tree. Tests express routes relative to
+  // the app (e.g. "/", "/services/ec2") and we prepend "/_console" here.
+  const entry = `/_console${route === '/' ? '' : route}` || '/_console'
   return render(
     <QueryClientProvider client={client}>
-      <MemoryRouter initialEntries={[route]} basename="/_console">
+      <MemoryRouter initialEntries={[entry]} basename="/_console">
         {ui}
       </MemoryRouter>
     </QueryClientProvider>,
