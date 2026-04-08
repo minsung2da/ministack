@@ -10,6 +10,7 @@ import asyncio
 import base64
 import json
 import logging
+import mimetypes
 import os
 import re
 import shutil
@@ -19,6 +20,7 @@ import subprocess
 import sys
 import tempfile
 import uuid
+from pathlib import Path
 from urllib.parse import parse_qs, urlparse
 
 _MINISTACK_HOST = os.environ.get("MINISTACK_HOST", "localhost")
@@ -142,6 +144,10 @@ SERVICE_NAME_ALIASES = {
     "elb": "elasticloadbalancing",
     "ecr": "ecr",
 }
+
+_CONSOLE_ROOT = Path(__file__).parent / "static" / "console"
+_CONSOLE_ASSETS = _CONSOLE_ROOT / "assets"
+_CONSOLE_API_PREFIX = "/_console/api/"
 
 
 def _resolve_port():
@@ -271,6 +277,23 @@ async def app(scope, receive, send):
                 status, resp_headers, resp_body = cognito.well_known_openid_configuration(_pool_id, _region)
                 await _send_response(send, status, resp_headers, resp_body)
                 return
+
+    # Console SPA static assets + SPA fallback — must run before AWS dispatch
+    # (See .planning/phases/01-app-shell-navigation/01-RESEARCH.md Pitfall #2.)
+    if await _serve_console(path, method, send):
+        return
+
+    # Console API: services registry (Phase 1 — only endpoint per D-01 exemption)
+    if path == "/_console/api/services" and method == "GET":
+        from ministack.console.registry import build_registry
+        payload = build_registry(list(SERVICE_HANDLERS.keys()))
+        await _send_response(send, 200, {
+            "Content-Type": "application/json",
+            "Cache-Control": "no-store",
+            # Dev-mode CORS — production is same-origin so this is harmless
+            "Access-Control-Allow-Origin": "*",
+        }, json.dumps(payload).encode())
+        return
 
     # Admin endpoints — no wildcard CORS headers (return early, before CORS block)
     if path == "/_ministack/reset" and method == "POST":
@@ -550,6 +573,79 @@ async def _send_response(send, status, headers, body):
         "type": "http.response.body",
         "body": body if isinstance(body, bytes) else body.encode("utf-8"),
     })
+
+
+async def _serve_console(path: str, method: str, send) -> bool:
+    """
+    Serve the console SPA under /_console/. Return True if handled.
+
+    Must be called BEFORE detect_service() and BEFORE S3 virtual-host detection
+    to avoid route collisions (see 01-RESEARCH.md Pitfall #2).
+
+    Safety:
+    - Only GET/HEAD methods are handled; other methods fall through.
+    - Path traversal is blocked via Path.resolve().relative_to(_CONSOLE_ROOT.resolve()).
+    - /_console/api/* is NOT handled here (returns False so the dispatch block below handles it).
+    - SPA fallback: any unmatched /_console/* GET returns index.html so browser
+      refresh on a deep link works.
+    - Cache headers per 01-RESEARCH.md Pitfall #7: hashed assets immutable, everything
+      else no-cache.
+    """
+    if not path.startswith("/_console"):
+        return False
+    if method not in ("GET", "HEAD"):
+        return False
+    if path.startswith(_CONSOLE_API_PREFIX):
+        return False
+
+    # Normalize: "/_console", "/_console/" -> serve index.html
+    rel = path[len("/_console/"):] if path.startswith("/_console/") else ""
+
+    root_resolved = _CONSOLE_ROOT.resolve() if _CONSOLE_ROOT.exists() else None
+
+    # Try to resolve a real file under static/console
+    if rel and root_resolved is not None:
+        candidate = (_CONSOLE_ROOT / rel).resolve()
+        try:
+            candidate.relative_to(root_resolved)
+        except ValueError:
+            # Path traversal attempt -- return 404, do NOT leak error
+            await _send_response(send, 404, {"Content-Type": "text/plain"}, b"Not Found")
+            return True
+        if candidate.is_file():
+            body = await asyncio.to_thread(candidate.read_bytes)
+            ctype, _ = mimetypes.guess_type(candidate.name)
+            try:
+                in_assets = candidate.parent.resolve() == _CONSOLE_ASSETS.resolve()
+            except FileNotFoundError:
+                in_assets = False
+            cache = (
+                "public, max-age=31536000, immutable"
+                if in_assets
+                else "no-cache"
+            )
+            await _send_response(send, 200, {
+                "Content-Type": ctype or "application/octet-stream",
+                "Cache-Control": cache,
+            }, body)
+            return True
+        # File under /_console/assets/* that doesn't exist -> 404 (not SPA fallback)
+        if rel.startswith("assets/"):
+            await _send_response(send, 404, {"Content-Type": "text/plain"}, b"Not Found")
+            return True
+
+    # SPA fallback: serve index.html for any unmatched /_console/* GET
+    index = _CONSOLE_ROOT / "index.html"
+    if not index.is_file():
+        await _send_response(send, 503, {"Content-Type": "text/plain"},
+                             b"Console UI not built. Run `npm run build` in web/.")
+        return True
+    body = await asyncio.to_thread(index.read_bytes)
+    await _send_response(send, 200, {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-cache",
+    }, body)
+    return True
 
 
 async def _handle_lifespan(scope, receive, send):
