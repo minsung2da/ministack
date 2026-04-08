@@ -5,6 +5,7 @@
 .gitignore
 .github
 .vscode
+.planning
 tests/
 data/
 *.md
@@ -17,3 +18,13 @@ SECURITY.md
 docker-compose.yml
 Makefile
 ministack*.png
+web/node_modules
+web/dist
+web/.vite
+web/playwright-report
+web/test-results
+web/playwright/.cache
+.pytest_cache
+.ruff_cache
+.venv
+venv

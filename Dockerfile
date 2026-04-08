@@ -1,9 +1,32 @@
+# syntax=docker/dockerfile:1.6
+
+# ---------- Stage 1: frontend build ----------
+FROM node:22-alpine AS frontend
+WORKDIR /build/web
+
+# Copy manifests first for layer caching
+COPY web/package.json web/package-lock.json* ./
+
+# Use `npm ci` when lockfile is present (deterministic install); fall back to
+# `npm install` otherwise. This keeps a fresh checkout building before the
+# lockfile is committed.
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+# Copy the rest of the frontend source
+COPY web/ ./
+
+# Vite build emits into ../ministack/static/console per vite.config.ts `build.outDir`.
+# We need the parent dir to exist so Vite can write into it.
+RUN mkdir -p /build/ministack/static/console && npm run build
+
+# ---------- Stage 2: Python runtime ----------
 FROM python:3.12-alpine
 
 LABEL maintainer="MiniStack" \
       description="Local AWS Service Emulator — drop-in LocalStack replacement"
 
-# Upgrade base packages to pick up latest security patches.
+# Upgrade base packages + install nodejs for Lambda runtime emulation.
+# (nodejs here is for LAMBDA execution, NOT for building the UI — that happened in Stage 1.)
 RUN apk upgrade --no-cache && apk add --no-cache nodejs && rm -f /usr/bin/wget /bin/wget
 
 WORKDIR /opt/ministack
@@ -18,7 +41,11 @@ RUN pip install --no-cache-dir --upgrade pip && \
         "pyyaml>=6.0" \
         "cryptography>=41.0"
 
+# Copy the Python package
 COPY ministack/ ministack/
+
+# Copy the built SPA from Stage 1 (per D-07)
+COPY --from=frontend /build/ministack/static/console/ /opt/ministack/ministack/static/console/
 
 RUN addgroup -S ministack && adduser -S ministack -G ministack
 RUN mkdir -p /tmp/ministack-data/s3 && chown -R ministack:ministack /tmp/ministack-data

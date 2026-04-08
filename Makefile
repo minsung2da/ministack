@@ -1,4 +1,29 @@
-.PHONY: build run stop test logs health clean
+.PHONY: build run stop test logs health clean build-frontend dev-frontend dev-backend test-backend test-frontend e2e docker-build
+
+# --- Phase 1 convenience targets ---
+
+build-frontend:
+	cd web && npm ci && npm run build
+
+dev-frontend:
+	cd web && npm run dev
+
+dev-backend:
+	GATEWAY_PORT=5566 python -m uvicorn ministack.app:app --host 0.0.0.0 --port 5566 --reload
+
+test-backend:
+	python -m pytest tests/ -q
+
+test-frontend:
+	cd web && npx vitest run --reporter=dot
+
+e2e:
+	bash scripts/e2e-with-server.sh
+
+docker-build:
+	docker build -t ministack:phase1 .
+
+# --- Original targets below ---
 
 IMAGE_NAME := ministack
 CONTAINER_NAME := ministack
