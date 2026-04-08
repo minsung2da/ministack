@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-stopped_at: Completed 01-03-PLAN.md (frontend scaffold)
-last_updated: "2026-04-08T12:22:59.560Z"
+stopped_at: Completed 01-04-PLAN.md (NAV-01/02/03/05 — Cloudscape app shell)
+last_updated: "2026-04-08T12:54:22.810Z"
 last_activity: 2026-04-08
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 6
-  completed_plans: 3
-  percent: 50
+  completed_plans: 4
+  percent: 67
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-04-05)
 ## Current Position
 
 Phase: 01 (app-shell-navigation) — EXECUTING
-Plan: 4 of 6
+Plan: 5 of 6
 Status: Ready to execute
 Last activity: 2026-04-08
 
@@ -55,6 +55,7 @@ Progress: [..........] 0%
 | Phase 01 P01 | ~15m (active) | 3 tasks | 23 files |
 | Phase 01 P02 | 5m | 3 tasks | 6 files |
 | Phase 01 P03 | 8m | 2 tasks | 15 files |
+| Phase 01 P04 | 25m | 2 tasks | 9 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work:
 - [Phase 01]: Plan 02: Missing /_console/assets/* returns 404 even when static dir absent (Rule 1 deviation from plan spec)
 - [Phase 01]: Plan 03: Dropped tsconfig.json composite reference to unblock tsc -b --noEmit (TS6310 conflict)
 - [Phase 01]: Plan 03: Pinned @types/node@22.10.2 to fix Plan 01 scaffold gap in vite.config.ts typecheck
+- [Phase 01]: TopNavigation brand link uses identity.href full-reload (Cloudscape default); React Router integration deferred to Phase 5 polish
+- [Phase 01]: renderWithProviders test util now prepends /_console basename to MemoryRouter entries (Plan 03 Rule-3 fix)
 
 ### Pending Todos
 
@@ -86,6 +89,6 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-04-08T12:22:52.366Z
-Stopped at: Completed 01-03-PLAN.md (frontend scaffold)
+Last session: 2026-04-08T12:54:22.608Z
+Stopped at: Completed 01-04-PLAN.md (NAV-01/02/03/05 — Cloudscape app shell)
 Resume file: None

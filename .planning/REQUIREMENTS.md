@@ -14,11 +14,11 @@
 
 ### Navigation (글로벌 네비게이션)
 
-- [ ] **NAV-01**: 상단 네비게이션 바에서 서비스를 검색하여 즉시 이동할 수 있다
-- [ ] **NAV-02**: 각 서비스 페이지에 서브 리소스별 좌측 사이드바가 표시된다
-- [ ] **NAV-03**: 현재 위치를 나타내는 브레드크럼 네비게이션이 동작한다
+- [x] **NAV-01**: 상단 네비게이션 바에서 서비스를 검색하여 즉시 이동할 수 있다
+- [x] **NAV-02**: 각 서비스 페이지에 서브 리소스별 좌측 사이드바가 표시된다
+- [x] **NAV-03**: 현재 위치를 나타내는 브레드크럼 네비게이션이 동작한다
 - [ ] **NAV-04**: 각 서비스 홈 페이지에 리소스 수와 상태 요약이 표시된다
-- [ ] **NAV-05**: 데스크톱 우선 반응형 레이아웃이 일반 노트북 화면에서 깨지지 않는다
+- [x] **NAV-05**: 데스크톱 우선 반응형 레이아웃이 일반 노트북 화면에서 깨지지 않는다
 
 ### Resource Management (리소스 CRUD)
 
@@ -117,11 +117,11 @@
 | FOUND-02 | Phase 1 | Complete |
 | FOUND-03 | Phase 1 | Complete |
 | FOUND-04 | Phase 1 | Complete |
-| NAV-01 | Phase 1 | Pending |
-| NAV-02 | Phase 1 | Pending |
-| NAV-03 | Phase 1 | Pending |
+| NAV-01 | Phase 1 | Complete |
+| NAV-02 | Phase 1 | Complete |
+| NAV-03 | Phase 1 | Complete |
 | NAV-04 | Phase 1 | Pending |
-| NAV-05 | Phase 1 | Pending |
+| NAV-05 | Phase 1 | Complete |
 | CRUD-01 | Phase 2 | Pending |
 | CRUD-02 | Phase 2 | Pending |
 | CRUD-03 | Phase 2 | Pending |
