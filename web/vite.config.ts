@@ -34,5 +34,9 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     globals: true,
     css: false,
+    // Playwright owns e2e/ — keep vitest scoped to src/ so it does not try to
+    // execute @playwright/test specs (which explode in jsdom).
+    include: ['src/**/*.{test,spec}.{ts,tsx}'],
+    exclude: ['node_modules', 'dist', 'e2e/**'],
   },
 })
