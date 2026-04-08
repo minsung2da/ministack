@@ -6,9 +6,18 @@ export type CountSummary = {
   noun?: string
 }
 
+// ky delegates to globalThis.fetch. In the browser, relative URLs resolve against
+// window.location; under node+jsdom (vitest), undici's fetch rejects relative URLs
+// with "Failed to parse URL from /". Resolving against window.location.origin keeps
+// counts.ts isomorphic — same-origin in prod, absolute in tests.
+const ORIGIN =
+  typeof window !== 'undefined' && window.location?.origin
+    ? window.location.origin
+    : ''
+
 export async function countDynamoDbTables(): Promise<CountSummary> {
   const res = await apiClient
-    .post('/', {
+    .post(`${ORIGIN}/`, {
       headers: {
         'X-Amz-Target': 'DynamoDB_20120810.ListTables',
         'Content-Type': 'application/x-amz-json-1.0',
@@ -23,7 +32,7 @@ export async function countDynamoDbTables(): Promise<CountSummary> {
 
 export async function countLambdaFunctions(): Promise<CountSummary> {
   const res = await apiClient
-    .get('/2015-03-31/functions/')
+    .get(`${ORIGIN}/2015-03-31/functions/`)
     .json<{ Functions?: unknown[] }>()
   return { count: res.Functions?.length ?? 0, noun: 'functions' }
 }
@@ -34,7 +43,7 @@ export async function countEc2Instances(): Promise<CountSummary> {
     Version: '2016-11-15',
   }).toString()
   const text = await apiClient
-    .post('/', {
+    .post(`${ORIGIN}/`, {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization:

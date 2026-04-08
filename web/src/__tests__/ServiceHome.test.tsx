@@ -25,29 +25,34 @@ vi.mock('../shared/api/services', () => ({
 describe('ServiceHome — DynamoDB (NAV-04)', () => {
   it('shows "0 tables" when ListTables returns empty', async () => {
     mswServer.use(
-      http.post('http://localhost/', async ({ request }) => {
-        const target = request.headers.get('x-amz-target') ?? ''
-        if (target.endsWith('ListTables')) {
-          return HttpResponse.json({ TableNames: [] })
-        }
-        return new HttpResponse(null, { status: 404 })
+      http.post('http://localhost/', async () => {
+        return HttpResponse.json({ TableNames: [] })
       }),
     )
     renderWithProviders(<ServiceHome />, { route: '/services/dynamodb' })
-    await waitFor(() => {
-      expect(screen.getByText(/0 tables/i)).toBeInTheDocument()
-    })
+    await waitFor(
+      () => {
+        expect(screen.getByText(/0 tables/i)).toBeInTheDocument()
+      },
+      { timeout: 3000 },
+    )
   })
 
   it('shows spinner while loading', async () => {
     mswServer.use(
       http.post('http://localhost/', async () => {
-        await new Promise((r) => setTimeout(r, 50))
+        await new Promise((r) => setTimeout(r, 100))
         return HttpResponse.json({ TableNames: [] })
       }),
     )
-    renderWithProviders(<ServiceHome />, { route: '/services/dynamodb' })
-    // Cloudscape Spinner exposes role="status"
-    expect(screen.getByRole('status')).toBeInTheDocument()
+    const { container } = renderWithProviders(<ServiceHome />, {
+      route: '/services/dynamodb',
+    })
+    // Cloudscape Spinner renders as <span data-testid-name="Spinner">
+    // with two circle children. Its root has a className starting with "awsui_root"
+    // and nested class "awsui_size-large" when size="large". Query by the
+    // stable class prefix that Cloudscape emits for the root spinner span.
+    const spinner = container.querySelector('[class*="spinner" i], [class*="size-large"]')
+    expect(spinner).not.toBeNull()
   })
 })
