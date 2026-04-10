@@ -1,5 +1,12 @@
-import { test } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
-test.describe('Service search (NAV-01 E2E)', () => {
-  test.skip('typing "ec" shows EC2 and navigates on select', async () => {})
+test('typing "dyn" finds DynamoDB and navigates on select', async ({ page }) => {
+  await page.goto('/_console/')
+  const search = page.getByPlaceholder('Search services')
+  await search.click()
+  await search.fill('dyn')
+  const option = page.getByRole('option', { name: /DynamoDB/i })
+  await expect(option).toBeVisible()
+  await option.click()
+  await expect(page).toHaveURL(/\/services\/dynamodb$/)
 })

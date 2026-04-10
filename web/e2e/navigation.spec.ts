@@ -1,6 +1,25 @@
-import { test } from '@playwright/test'
+import { test, expect } from '@playwright/test'
 
-test.describe('Console navigation end-to-end (Plan 06)', () => {
-  test.skip('opens /_console/ and sees app shell with top nav and sidebar', async () => {})
-  test.skip('deep link /_console/services/ec2 renders without page reload', async () => {})
+test.describe('Console navigation end-to-end', () => {
+  test('opens /_console/ and renders the app shell', async ({ page }) => {
+    await page.goto('/_console/')
+    // TopBar brand
+    await expect(page.getByText('MiniStack', { exact: true }).first()).toBeVisible()
+    // Sidebar header
+    await expect(page.getByText('Services', { exact: true }).first()).toBeVisible()
+    // Breadcrumb root
+    await expect(page.getByText('Console', { exact: true }).first()).toBeVisible()
+  })
+
+  test('deep link /services/dynamodb renders without a reload', async ({ page }) => {
+    await page.goto('/_console/')
+    await page.goto('/_console/services/dynamodb')
+    await expect(page.getByRole('heading', { name: /DynamoDB/i })).toBeVisible({ timeout: 10_000 })
+  })
+
+  test('SPA fallback: hard-refresh a deep link returns the app', async ({ page }) => {
+    await page.goto('/_console/services/ec2')
+    await page.reload()
+    await expect(page.getByRole('heading', { name: /EC2/i })).toBeVisible({ timeout: 10_000 })
+  })
 })
