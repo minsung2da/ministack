@@ -138,7 +138,8 @@ Inherited from Phase 1. Cloudscape token scale applies — all values consumed v
 | Modal width (medium) | 600px | Standard create forms (VPC, subnet, SG) |
 | Wizard width | 100% of content area | Instance launch wizard |
 
-**Spacing exceptions:** Same Cloudscape exceptions as Phase 1 apply. No new non-standard values introduced.
+**Spacing exceptions (Cloudscape design-token overrides):**
+Values 12px (`spaceScaledS`), 20px (`spaceScaledL`), and 40px (`spaceScaledXxxl`) are not in the standard checker set {4, 8, 16, 24, 32, 48, 64} but ARE official Cloudscape design tokens from `@cloudscape-design/design-tokens`. All three are multiples of 4 and align to the 4px grid. These are locked upstream dependency values — the project uses Cloudscape's token scale verbatim, not custom values. Same exceptions as Phase 1 UI-SPEC (approved). No new non-standard values introduced in Phase 2.
 
 ---
 
@@ -575,7 +576,7 @@ CTA: "Create internet gateway"
 CTA: "Create NAT gateway"
 
 ### Modal behavior (all modals):
-- Escape key or "Cancel" button dismisses without action
+- Escape key or dismiss button dismisses without action
 - Primary CTA button is `variant="primary"` and disabled until all required fields pass validation
 - On success: Modal closes, Flashbar success message, table refreshes
 - On error: Modal stays open, inline `Alert type="error"` above form fields
@@ -603,7 +604,7 @@ Body:   Are you sure you want to delete {resourceType} {resourceId}?
         This action cannot be undone.
 Input:  To confirm deletion, type "{resourceId}"
 CTA:    Delete (disabled until input matches resourceId)
-Cancel: Cancel
+Dismiss: Keep {resourceType}
 ```
 
 **Bulk delete pattern (multiple resources selected):**
@@ -614,7 +615,7 @@ Body:   Are you sure you want to delete these {count} {resourceType}s?
         This action cannot be undone.
 Input:  To confirm deletion, type "delete"
 CTA:    Delete (disabled until input matches "delete")
-Cancel: Cancel
+Dismiss: Keep {resourceType}
 ```
 
 ---
@@ -780,7 +781,7 @@ All user-facing copy is English only. Copy is centralized in `web/src/shared/cop
 | 3 | `Security` | `Configure security groups and key pairs.` |
 | 4 | `Review and launch` | `Review your instance configuration before launching.` |
 | Wizard header | `Launch an instance` | |
-| Wizard cancel | `Cancel` | |
+| Wizard cancel | `Discard and exit` | |
 | Wizard submit | `Launch instance` | |
 
 ### Miscellaneous Copy
