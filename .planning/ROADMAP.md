@@ -49,7 +49,15 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. User can create a new instance by selecting instance type, VPC, subnet, and security group from a form
   4. User can view, create, and delete VPCs, subnets, security groups, key pairs, EBS volumes, snapshots, Elastic IPs, NAT Gateways, and Internet Gateways
   5. User can click any resource row to see all its attributes in a detail view, and can manually refresh any resource list
-**Plans**: TBD
+**Plans**: 7 plans
+Plans:
+- [ ] 02-01-PLAN.md — Foundation: XML utils, EC2 client, types, shared CRUD components, routes, SplitPanel context
+- [ ] 02-02-PLAN.md — Instances tab: table, actions (start/stop/terminate/reboot), SplitPanel detail
+- [ ] 02-03-PLAN.md — Instance Launch Wizard (4-step Cloudscape Wizard with live dropdowns)
+- [ ] 02-04-PLAN.md — VPCs, Subnets, Security Groups tabs (full CRUD)
+- [ ] 02-05-PLAN.md — Key Pairs, EBS Volumes, Snapshots tabs (full CRUD)
+- [ ] 02-06-PLAN.md — Elastic IPs, Internet Gateways, NAT Gateways tabs (full CRUD)
+- [ ] 02-07-PLAN.md — Route Tables, Network Interfaces (list-only) + human verification checkpoint
 **UI hint**: yes
 
 ### Phase 3: S3 & Lambda Services
@@ -97,8 +105,8 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. App Shell & Navigation | 0/TBD | Not started | - |
-| 2. EC2 Dashboard & CRUD Patterns | 0/TBD | Not started | - |
+| 1. App Shell & Navigation | 6/6 | Complete | 2026-04-10 |
+| 2. EC2 Dashboard & CRUD Patterns | 0/7 | In progress | - |
 | 3. S3 & Lambda Services | 0/TBD | Not started | - |
 | 4. DynamoDB, SQS & Generic Framework | 0/TBD | Not started | - |
 | 5. Data Display Quality & Differentiators | 0/TBD | Not started | - |
