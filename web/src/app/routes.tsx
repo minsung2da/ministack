@@ -15,6 +15,7 @@ const Ec2Dashboard = lazy(() => import('../services/ec2/pages/Ec2Dashboard'))
 const Ec2TabPlaceholder = lazy(
   () => import('../services/ec2/pages/Ec2TabPlaceholder'),
 )
+const InstancesTab = lazy(() => import('../services/ec2/pages/InstancesTab'))
 
 function withSuspense(node: ReactNode): ReactNode {
   return <Suspense fallback={<Spinner size="large" />}>{node}</Suspense>
@@ -34,7 +35,7 @@ export const routes: RouteObject[] = [
           { index: true, element: <Navigate to="instances" replace /> },
           {
             path: 'instances',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<InstancesTab />),
           },
           { path: 'vpcs', element: withSuspense(<Ec2TabPlaceholder />) },
           {
