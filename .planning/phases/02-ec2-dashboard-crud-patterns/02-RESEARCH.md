@@ -775,17 +775,16 @@ export const INSTANCE_COLUMNS: TableProps.ColumnDefinition<Ec2Instance>[] = [
 
 ---
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **ServiceHome redirect for EC2**
+1. **ServiceHome redirect for EC2** -- RESOLVED
    - What we know: `routes.tsx` has `services/:serviceKey` matching all services including ec2. A more-specific `services/ec2` route must override it for EC2.
-   - What's unclear: Should the `services/ec2` route completely replace `services/:serviceKey` for ec2, or should ServiceHome detect `serviceKey === 'ec2'` and render a redirect link instead of the summary card?
-   - Recommendation: Use a more-specific route `services/ec2` placed before `services/:serviceKey`. React Router 7 matches more-specific static segments before wildcards. This avoids conditional logic in ServiceHome.
+   - Resolution: Use a more-specific route `services/ec2` placed before `services/:serviceKey`. React Router 7 matches more-specific static segments before wildcards. This avoids conditional logic in ServiceHome. Implemented in Plan 02-02 Task 2.
 
-2. **Copy strings for EC2 actions**
+2. **Copy strings for EC2 actions** -- RESOLVED
    - What we know: `web/src/shared/copy.ts` centralizes all user-facing strings (Phase 1 pattern).
-   - What's unclear: Phase 2 adds ~50 new strings (tab labels, action button labels, form field labels, error messages). Should they go in `copy.ts` or in a service-scoped `ec2/copy.ts`?
-   - Recommendation: Create `web/src/services/ec2/copy.ts` for EC2-specific strings. Keep `shared/copy.ts` for shell-level strings only. Scales better when S3/Lambda add their own copy files.
+   - Research recommended: Create `web/src/services/ec2/copy.ts` for EC2-specific strings.
+   - Resolution (override): Keep all EC2 copy strings in `web/src/shared/copy.ts`. The file is already established from Phase 1 and splitting at this stage adds unnecessary complexity -- a single import source is simpler for 12 resource tabs that all need the same copy. When S3/Lambda phases arrive, we can revisit if the file grows beyond 400 lines. Implemented in Plan 02-01 Task 1.
 
 ---
 
