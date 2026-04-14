@@ -16,6 +16,9 @@ const Ec2TabPlaceholder = lazy(
   () => import('../services/ec2/pages/Ec2TabPlaceholder'),
 )
 const InstancesTab = lazy(() => import('../services/ec2/pages/InstancesTab'))
+const VpcsTab = lazy(() => import('../services/ec2/pages/VpcsTab'))
+const SubnetsTab = lazy(() => import('../services/ec2/pages/SubnetsTab'))
+const SecurityGroupsTab = lazy(() => import('../services/ec2/pages/SecurityGroupsTab'))
 
 function withSuspense(node: ReactNode): ReactNode {
   return <Suspense fallback={<Spinner size="large" />}>{node}</Suspense>
@@ -37,14 +40,14 @@ export const routes: RouteObject[] = [
             path: 'instances',
             element: withSuspense(<InstancesTab />),
           },
-          { path: 'vpcs', element: withSuspense(<Ec2TabPlaceholder />) },
+          { path: 'vpcs', element: withSuspense(<VpcsTab />) },
           {
             path: 'subnets',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<SubnetsTab />),
           },
           {
             path: 'security-groups',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<SecurityGroupsTab />),
           },
           {
             path: 'key-pairs',
