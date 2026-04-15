@@ -6,6 +6,7 @@
  *   useInstances    — query hook (DescribeInstances)
  *   useStartInstances, useStopInstances,
  *   useTerminateInstances, useRebootInstances — mutation hooks
+ *   useRunInstance  — mutation hook (RunInstances)
  */
 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
@@ -214,6 +215,60 @@ export function useRebootInstances() {
       const params: Record<string, string> = {}
       addMemberList(params, 'InstanceId', instanceIds)
       return ec2Query('RebootInstances', params)
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ['ec2', 'instances'] })
+    },
+  })
+}
+
+type RunInstanceInput = {
+  imageId: string
+  instanceType: string
+  subnetId: string
+  securityGroupIds: string[]
+  keyName?: string
+  nameTag?: string
+}
+
+/**
+ * Mutation hook — launches a new EC2 instance via RunInstances.
+ * Invalidates the instances query on success so the table refreshes.
+ */
+export function useRunInstance() {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: async ({
+      imageId,
+      instanceType,
+      subnetId,
+      securityGroupIds,
+      keyName,
+      nameTag,
+    }: RunInstanceInput) => {
+      const params: Record<string, string> = {
+        ImageId: imageId,
+        InstanceType: instanceType,
+        SubnetId: subnetId,
+        MinCount: '1',
+        MaxCount: '1',
+      }
+
+      if (keyName) {
+        params.KeyName = keyName
+      }
+
+      if (securityGroupIds.length > 0) {
+        addMemberList(params, 'SecurityGroupId', securityGroupIds)
+      }
+
+      if (nameTag) {
+        params['TagSpecification.1.ResourceType'] = 'instance'
+        params['TagSpecification.1.Tag.1.Key'] = 'Name'
+        params['TagSpecification.1.Tag.1.Value'] = nameTag
+      }
+
+      return ec2Query('RunInstances', params)
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ['ec2', 'instances'] })
