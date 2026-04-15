@@ -12,9 +12,6 @@ const ConsoleHome = lazy(() => import('../pages/ConsoleHome'))
 const ServiceHome = lazy(() => import('../pages/ServiceHome'))
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage'))
 const Ec2Dashboard = lazy(() => import('../services/ec2/pages/Ec2Dashboard'))
-const Ec2TabPlaceholder = lazy(
-  () => import('../services/ec2/pages/Ec2TabPlaceholder'),
-)
 const InstancesTab = lazy(() => import('../services/ec2/pages/InstancesTab'))
 const VpcsTab = lazy(() => import('../services/ec2/pages/VpcsTab'))
 const SubnetsTab = lazy(() => import('../services/ec2/pages/SubnetsTab'))
@@ -27,6 +24,10 @@ const InternetGatewaysTab = lazy(
   () => import('../services/ec2/pages/InternetGatewaysTab'),
 )
 const NatGatewaysTab = lazy(() => import('../services/ec2/pages/NatGatewaysTab'))
+const RouteTablesTab = lazy(() => import('../services/ec2/pages/RouteTablesTab'))
+const NetworkInterfacesTab = lazy(
+  () => import('../services/ec2/pages/NetworkInterfacesTab'),
+)
 const InstanceWizard = lazy(() => import('../services/ec2/pages/InstanceWizard'))
 
 function withSuspense(node: ReactNode): ReactNode {
@@ -88,11 +89,11 @@ export const routes: RouteObject[] = [
           },
           {
             path: 'route-tables',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<RouteTablesTab />),
           },
           {
             path: 'network-interfaces',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<NetworkInterfacesTab />),
           },
         ],
       },
