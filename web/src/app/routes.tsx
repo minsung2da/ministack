@@ -22,6 +22,11 @@ const SecurityGroupsTab = lazy(() => import('../services/ec2/pages/SecurityGroup
 const KeyPairsTab = lazy(() => import('../services/ec2/pages/KeyPairsTab'))
 const VolumesTab = lazy(() => import('../services/ec2/pages/VolumesTab'))
 const SnapshotsTab = lazy(() => import('../services/ec2/pages/SnapshotsTab'))
+const ElasticIpsTab = lazy(() => import('../services/ec2/pages/ElasticIpsTab'))
+const InternetGatewaysTab = lazy(
+  () => import('../services/ec2/pages/InternetGatewaysTab'),
+)
+const NatGatewaysTab = lazy(() => import('../services/ec2/pages/NatGatewaysTab'))
 
 function withSuspense(node: ReactNode): ReactNode {
   return <Suspense fallback={<Spinner size="large" />}>{node}</Suspense>
@@ -66,15 +71,15 @@ export const routes: RouteObject[] = [
           },
           {
             path: 'elastic-ips',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<ElasticIpsTab />),
           },
           {
             path: 'internet-gateways',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<InternetGatewaysTab />),
           },
           {
             path: 'nat-gateways',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<NatGatewaysTab />),
           },
           {
             path: 'route-tables',
