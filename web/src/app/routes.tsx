@@ -27,6 +27,7 @@ const InternetGatewaysTab = lazy(
   () => import('../services/ec2/pages/InternetGatewaysTab'),
 )
 const NatGatewaysTab = lazy(() => import('../services/ec2/pages/NatGatewaysTab'))
+const InstanceWizard = lazy(() => import('../services/ec2/pages/InstanceWizard'))
 
 function withSuspense(node: ReactNode): ReactNode {
   return <Suspense fallback={<Spinner size="large" />}>{node}</Suspense>
@@ -80,6 +81,10 @@ export const routes: RouteObject[] = [
           {
             path: 'nat-gateways',
             element: withSuspense(<NatGatewaysTab />),
+          },
+          {
+            path: 'launch-wizard',
+            element: withSuspense(<InstanceWizard />),
           },
           {
             path: 'route-tables',
