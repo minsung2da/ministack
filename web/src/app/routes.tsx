@@ -19,6 +19,9 @@ const InstancesTab = lazy(() => import('../services/ec2/pages/InstancesTab'))
 const VpcsTab = lazy(() => import('../services/ec2/pages/VpcsTab'))
 const SubnetsTab = lazy(() => import('../services/ec2/pages/SubnetsTab'))
 const SecurityGroupsTab = lazy(() => import('../services/ec2/pages/SecurityGroupsTab'))
+const KeyPairsTab = lazy(() => import('../services/ec2/pages/KeyPairsTab'))
+const VolumesTab = lazy(() => import('../services/ec2/pages/VolumesTab'))
+const SnapshotsTab = lazy(() => import('../services/ec2/pages/SnapshotsTab'))
 
 function withSuspense(node: ReactNode): ReactNode {
   return <Suspense fallback={<Spinner size="large" />}>{node}</Suspense>
@@ -51,15 +54,15 @@ export const routes: RouteObject[] = [
           },
           {
             path: 'key-pairs',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<KeyPairsTab />),
           },
           {
             path: 'volumes',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<VolumesTab />),
           },
           {
             path: 'snapshots',
-            element: withSuspense(<Ec2TabPlaceholder />),
+            element: withSuspense(<SnapshotsTab />),
           },
           {
             path: 'elastic-ips',
