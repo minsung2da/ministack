@@ -51,15 +51,15 @@ Decimal phases appear between their surrounding integers in numeric order.
   5. User can click any resource row to see all its attributes in a detail view, and can manually refresh any resource list
 **Plans**: 9 plans
 Plans:
-- [ ] 02-00-PLAN.md — Wave 0 test scaffolding: MSW handlers, fixtures, 12 test stub files
-- [ ] 02-01-PLAN.md — Utilities: XML parsing, EC2 client, types, copy strings
-- [ ] 02-02-PLAN.md — Components: ResourceTable, StatusBadge, DeleteModal, CreateModal, SplitPanelDetail, FlashNotifications, EC2 Dashboard tabs, routes
-- [ ] 02-03-PLAN.md — Instances tab: table, actions (start/stop/terminate/reboot), SplitPanel detail
-- [ ] 02-04-PLAN.md — VPCs, Subnets, Security Groups tabs (full CRUD)
-- [ ] 02-05-PLAN.md — Key Pairs, EBS Volumes, Snapshots tabs (full CRUD)
-- [ ] 02-06-PLAN.md — Elastic IPs, Internet Gateways, NAT Gateways tabs (full CRUD)
-- [ ] 02-07-PLAN.md — Instance Launch Wizard (4-step Cloudscape Wizard with canonical hooks)
-- [ ] 02-08-PLAN.md — Route Tables, Network Interfaces (list-only) + human verification checkpoint
+- [x] 02-00-PLAN.md — Wave 0 test scaffolding: MSW handlers, fixtures, 12 test stub files
+- [x] 02-01-PLAN.md — Utilities: XML parsing, EC2 client, types, copy strings
+- [x] 02-02-PLAN.md — Components: ResourceTable, StatusBadge, DeleteModal, CreateModal, SplitPanelDetail, FlashNotifications, EC2 Dashboard tabs, routes
+- [x] 02-03-PLAN.md — Instances tab: table, actions (start/stop/terminate/reboot), SplitPanel detail
+- [x] 02-04-PLAN.md — VPCs, Subnets, Security Groups tabs (full CRUD)
+- [x] 02-05-PLAN.md — Key Pairs, EBS Volumes, Snapshots tabs (full CRUD)
+- [x] 02-06-PLAN.md — Elastic IPs, Internet Gateways, NAT Gateways tabs (full CRUD)
+- [x] 02-07-PLAN.md — Instance Launch Wizard (4-step Cloudscape Wizard with canonical hooks)
+- [x] 02-08-PLAN.md — Route Tables, Network Interfaces (list-only) + human verification checkpoint
 **UI hint**: yes
 
 ### Phase 3: S3 & Lambda Services
