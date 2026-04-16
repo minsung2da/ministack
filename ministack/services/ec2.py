@@ -1185,6 +1185,19 @@ def _describe_addresses(p):
 # Tags
 # ---------------------------------------------------------------------------
 
+
+def _render_tag_set(resource_id: str) -> str:
+    """Render the <tagSet> XML for a resource, reading from the _tags store."""
+    tags = _tags.get(resource_id, [])
+    if not tags:
+        return "<tagSet/>"
+    items = "".join(
+        f"<item><key>{t['Key']}</key><value>{t['Value']}</value></item>"
+        for t in tags
+    )
+    return f"<tagSet>{items}</tagSet>"
+
+
 def _create_tags(p):
     resource_ids = _parse_member_list(p, "ResourceId")
     tags = _parse_tags(p)
@@ -1608,7 +1621,7 @@ def _vpc_fields_xml(vpc, tag="item"):
         {'<defaultNetworkAclId>' + vpc.get('DefaultNetworkAclId', '') + '</defaultNetworkAclId>' if vpc.get('DefaultNetworkAclId') else ''}
         {'<defaultSecurityGroupId>' + vpc.get('DefaultSecurityGroupId', '') + '</defaultSecurityGroupId>' if vpc.get('DefaultSecurityGroupId') else ''}
         {'<mainRouteTableId>' + vpc.get('MainRouteTableId', '') + '</mainRouteTableId>' if vpc.get('MainRouteTableId') else ''}
-        <tagSet/>
+        {_render_tag_set(vpc['VpcId'])}
     </{tag}>"""
 
 

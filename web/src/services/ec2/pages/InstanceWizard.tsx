@@ -27,6 +27,7 @@ import { useSubnets } from '../api/subnets'
 import { useSecurityGroups } from '../api/securityGroups'
 import { useKeyPairs } from '../api/keyPairs'
 import { useRunInstance } from '../api/instances'
+import { applyNameTag } from '../api/ec2Client'
 import { useFlashNotifications, FlashNotifications } from '../components/FlashNotifications'
 import { copy } from '../../../shared/copy'
 
@@ -421,6 +422,11 @@ export default function InstanceWizard() {
       const doc = parser.parseFromString(xml, 'application/xml')
       const instanceId =
         doc.getElementsByTagName('instanceId')[0]?.textContent ?? 'unknown'
+
+      // MiniStack backend ignores TagSpecification — apply Name tag separately
+      if (wizardState.nameTag) {
+        await applyNameTag(instanceId, wizardState.nameTag)
+      }
 
       addSuccess(copy.ec2ActionSuccess.launchInstance(instanceId))
       navigate('/services/ec2/instances')

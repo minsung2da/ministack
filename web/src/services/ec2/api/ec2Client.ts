@@ -57,3 +57,20 @@ export function addMemberList(
     params[`${key}.${i + 1}`] = id
   })
 }
+
+/**
+ * Calls CreateTags to apply a Name tag to a resource.
+ * MiniStack's RunInstances/CreateVpc/etc. don't process TagSpecification,
+ * so we issue a separate CreateTags call after resource creation.
+ */
+export async function applyNameTag(
+  resourceId: string,
+  name: string,
+): Promise<void> {
+  if (!name) return
+  await ec2Query('CreateTags', {
+    'ResourceId.1': resourceId,
+    'Tag.1.Key': 'Name',
+    'Tag.1.Value': name,
+  })
+}

@@ -12,6 +12,7 @@
  */
 
 import { useState, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useQueryClient } from '@tanstack/react-query'
 import type { TableProps } from '@cloudscape-design/components/table'
 import type { PropertyFilterProps } from '@cloudscape-design/components/property-filter'
@@ -291,6 +292,7 @@ function InstanceDetailPanel({ instance }: { instance: Ec2Instance }) {
 
 export default function InstancesTab() {
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
   const { data: instances = [], isLoading } = useInstances()
   const [selectedItems, setSelectedItems] = useState<Ec2Instance[]>([])
   const [terminateModalVisible, setTerminateModalVisible] = useState(false)
@@ -432,6 +434,7 @@ export default function InstancesTab() {
         selectedItems={selectedItems}
         onSelectionChange={setSelectedItems}
         onRowClick={handleRowClick}
+        trackBy="instanceId"
         headerActions={
           <SpaceBetween direction="horizontal" size="xs">
             <Button
@@ -447,7 +450,7 @@ export default function InstancesTab() {
             >
               Instance actions
             </ButtonDropdown>
-            <Button variant="primary" href="../launch-wizard">
+            <Button variant="primary" onClick={() => navigate('../launch-wizard')}>
               Launch instance
             </Button>
           </SpaceBetween>

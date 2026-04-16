@@ -26,6 +26,7 @@ type ResourceTableProps<T> = {
   headerActions?: ReactNode
   selectionType?: 'multi' | 'single' | 'none'
   useTextFilter?: boolean
+  trackBy?: string | ((item: T) => string)
 }
 
 const PROPERTY_FILTER_I18N: PropertyFilterProps.I18nStrings = {
@@ -92,6 +93,7 @@ function ResourceTableText<T extends object>({
   onRowClick,
   headerActions,
   selectionType = 'multi',
+  trackBy,
   ec2PageSize,
   setEc2PageSize,
 }: Omit<ResourceTableProps<T>, 'filteringProperties' | 'useTextFilter'> & {
@@ -120,6 +122,7 @@ function ResourceTableText<T extends object>({
       selectedItems={selectedItems}
       onSelectionChange={({ detail }) => onSelectionChange(detail.selectedItems)}
       onRowClick={onRowClick ? ({ detail }) => onRowClick(detail.item) : undefined}
+      trackBy={trackBy}
       header={
         <Header
           counter={`(${items.length})`}
@@ -175,6 +178,7 @@ function ResourceTableProperty<T extends object>({
   onRowClick,
   headerActions,
   selectionType = 'multi',
+  trackBy,
   ec2PageSize,
   setEc2PageSize,
 }: Omit<ResourceTableProps<T>, 'useTextFilter'> & {
@@ -204,6 +208,7 @@ function ResourceTableProperty<T extends object>({
       selectedItems={selectedItems}
       onSelectionChange={({ detail }) => onSelectionChange(detail.selectedItems)}
       onRowClick={onRowClick ? ({ detail }) => onRowClick(detail.item) : undefined}
+      trackBy={trackBy}
       header={
         <Header
           counter={`(${items.length})`}
