@@ -72,7 +72,14 @@ Plans:
   3. User can upload files via drag-and-drop to a bucket
   4. User can see Lambda function list with runtime, handler, and last modified time, and view function configuration/environment/triggers on a detail page
   5. User can invoke a Lambda function with a JSON payload and see the response and execution log
-**Plans**: TBD
+**Plans**: 6 plans (S3 only; Lambda plans to be added)
+Plans:
+- [ ] 03-00-PLAN.md — Wave 0: S3 MSW handlers, XML fixtures, 18 test stubs
+- [ ] 03-01-PLAN.md — S3 API primitives: s3Client, parseS3Xml, validateBucketName, uploadClient (XHR+progress), downloadClient (Blob)
+- [ ] 03-02-PLAN.md — TanStack Query hooks + mutations (buckets, objects, metadata, tags, delete)
+- [ ] 03-03-PLAN.md — Bucket list page: routes, BucketTable, Create/Delete modals, SplitPanel (S3-01)
+- [ ] 03-04-PLAN.md — Object browser shell: ObjectTable with parent row, PrefixBreadcrumb, continuation-token pagination (S3-02)
+- [ ] 03-05-PLAN.md — Upload/download/detail/delete: DropZone, UploadFlashItem, ObjectDetail, DeleteObjectModal + human-verify checkpoint (S3-03, S3-04)
 **UI hint**: yes
 
 ### Phase 4: DynamoDB, SQS & Generic Service Framework
