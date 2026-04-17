@@ -1,0 +1,34 @@
+/* S3 drag-and-drop zone.
+ *
+ * Uses Cloudscape design tokens exclusively — no hex/px literals.
+ * The `--over` modifier renders a dashed info-blue border + subtle fill when
+ * files are being dragged over the object-browser region.
+ */
+.s3-dropzone {
+  position: relative;
+  border-style: dashed;
+  border-width: var(--awsui-border-width-alert);
+  border-color: transparent;
+  border-radius: var(--awsui-border-radius-container);
+  transition: border-color 120ms ease-out, background-color 120ms ease-out;
+}
+
+.s3-dropzone--over {
+  border-color: var(--awsui-color-border-status-info);
+  background-color: var(--awsui-color-background-status-info);
+}
+
+.s3-dropzone__overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  pointer-events: none;
+  font-weight: bold;
+  color: var(--awsui-color-text-status-info);
+  background-color: var(--awsui-color-background-status-info);
+  border-radius: var(--awsui-border-radius-container);
+  padding: var(--awsui-space-scaled-m);
+}
