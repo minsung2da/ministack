@@ -14,9 +14,10 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: App Shell & Navigation** - Build pipeline, ASGI middleware, SPA routing, global navigation with service search and sidebar
 - [ ] **Phase 2: EC2 Dashboard & CRUD Patterns** - Full EC2 service UI proving all CRUD patterns (tables, detail, create, delete, actions)
-- [ ] **Phase 3: S3 & Lambda Services** - S3 object browser with upload/download and Lambda with test invocation, reusing Phase 2 patterns
-- [ ] **Phase 4: DynamoDB, SQS & Generic Framework** - Schema-driven generic components validated by building DDB and SQS UIs with them
-- [ ] **Phase 5: Data Display Quality & Differentiators** - Cross-cutting UX polish (JSON tree, timestamps, loading states, errors) and unique features (reset, dark mode)
+- [x] **Phase 3: S3 Service** - S3 bucket/object browser with prefix navigation, drag-and-drop upload, download, metadata/tags (S3-01 through S3-04)
+- [ ] **Phase 4: Lambda Service** - Lambda function list, configuration/environment/triggers detail, test invocation with JSON payload (LAM-01 through LAM-03)
+- [ ] **Phase 5: DynamoDB, SQS & Generic Framework** - Schema-driven generic components validated by building DDB and SQS UIs with them
+- [ ] **Phase 6: Data Display Quality & Differentiators** - Cross-cutting UX polish (JSON tree, timestamps, loading states, errors) and unique features (reset, dark mode)
 
 ## Phase Details
 
@@ -62,29 +63,40 @@ Plans:
 - [x] 02-08-PLAN.md — Route Tables, Network Interfaces (list-only) + human verification checkpoint
 **UI hint**: yes
 
-### Phase 3: S3 & Lambda Services
-**Goal**: Users can browse S3 buckets/objects with drag-and-drop upload and invoke Lambda functions with test payloads, reusing CRUD patterns from Phase 2
+### Phase 3: S3 Service
+**Goal**: Users can browse S3 buckets/objects with drag-and-drop upload, download, and metadata/tags, reusing CRUD patterns from Phase 2
 **Depends on**: Phase 2
-**Requirements**: S3-01, S3-02, S3-03, S3-04, LAM-01, LAM-02, LAM-03
+**Requirements**: S3-01, S3-02, S3-03, S3-04
 **Success Criteria** (what must be TRUE):
   1. User can list buckets, create a new bucket, and delete an empty bucket
   2. User can navigate into a bucket and browse objects by folder prefix, view object metadata, and download objects
   3. User can upload files via drag-and-drop to a bucket
-  4. User can see Lambda function list with runtime, handler, and last modified time, and view function configuration/environment/triggers on a detail page
-  5. User can invoke a Lambda function with a JSON payload and see the response and execution log
-**Plans**: 6 plans (S3 only; Lambda plans to be added)
+  4. Non-empty-bucket delete returns a clear error; bulk and single object deletes use type-to-confirm modals
+**Scope note**: Originally combined with Lambda; Lambda split to Phase 4 on 2026-04-17 to keep phase delivery coherent.
+**Plans**: 6 plans (all complete)
 Plans:
-- [ ] 03-00-PLAN.md — Wave 0: S3 MSW handlers, XML fixtures, 18 test stubs
-- [ ] 03-01-PLAN.md — S3 API primitives: s3Client, parseS3Xml, validateBucketName, uploadClient (XHR+progress), downloadClient (Blob)
-- [ ] 03-02-PLAN.md — TanStack Query hooks + mutations (buckets, objects, metadata, tags, delete)
-- [ ] 03-03-PLAN.md — Bucket list page: routes, BucketTable, Create/Delete modals, SplitPanel (S3-01)
-- [ ] 03-04-PLAN.md — Object browser shell: ObjectTable with parent row, PrefixBreadcrumb, continuation-token pagination (S3-02)
-- [ ] 03-05-PLAN.md — Upload/download/detail/delete: DropZone, UploadFlashItem, ObjectDetail, DeleteObjectModal + human-verify checkpoint (S3-03, S3-04)
+- [x] 03-00-PLAN.md — Wave 0: S3 MSW handlers, XML fixtures, 18 test stubs
+- [x] 03-01-PLAN.md — S3 API primitives: s3Client, parseS3Xml, validateBucketName, uploadClient (XHR+progress), downloadClient (Blob)
+- [x] 03-02-PLAN.md — TanStack Query hooks + mutations (buckets, objects, metadata, tags, delete)
+- [x] 03-03-PLAN.md — Bucket list page: routes, BucketTable, Create/Delete modals, SplitPanel (S3-01)
+- [x] 03-04-PLAN.md — Object browser shell: ObjectTable with parent row, PrefixBreadcrumb, continuation-token pagination (S3-02)
+- [x] 03-05-PLAN.md — Upload/download/detail/delete: DropZone, UploadFlashItem, ObjectDetail, DeleteObjectModal + human-verify checkpoint (S3-03, S3-04)
 **UI hint**: yes
 
-### Phase 4: DynamoDB, SQS & Generic Service Framework
-**Goal**: Users can manage DynamoDB tables/items and SQS queues/messages, and the schema-driven generic framework can render any new service UI from a descriptor without custom code
+### Phase 4: Lambda Service
+**Goal**: Users can see the Lambda function list, view function configuration/environment/triggers on a detail page, and invoke a function with a JSON payload to see the response and execution log
 **Depends on**: Phase 3
+**Requirements**: LAM-01, LAM-02, LAM-03
+**Success Criteria** (what must be TRUE):
+  1. User can see Lambda function list with runtime, handler, and last modified time
+  2. User can open a function detail page showing configuration, environment variables, and triggers
+  3. User can invoke a function with a JSON payload and see the response body and execution log
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 5: DynamoDB, SQS & Generic Service Framework
+**Goal**: Users can manage DynamoDB tables/items and SQS queues/messages, and the schema-driven generic framework can render any new service UI from a descriptor without custom code
+**Depends on**: Phase 4
 **Requirements**: DDB-01, DDB-02, DDB-03, SQS-01, SQS-02, SQS-03, GEN-01, GEN-02, GEN-03
 **Success Criteria** (what must be TRUE):
   1. User can view DynamoDB table list with key schema and indexes, scan/query items, and create/edit/delete items as JSON
@@ -94,9 +106,9 @@ Plans:
 **Plans**: TBD
 **UI hint**: yes
 
-### Phase 5: Data Display Quality & Differentiators
+### Phase 6: Data Display Quality & Differentiators
 **Goal**: Users experience polished data display (JSON trees, relative timestamps, loading states, error handling) and unique features that differentiate MiniStack from competitors
-**Depends on**: Phase 4
+**Depends on**: Phase 5
 **Requirements**: DISP-01, DISP-02, DISP-03, DISP-04, DISP-05, DISP-06, DIFF-01, DIFF-02
 **Success Criteria** (what must be TRUE):
   1. User can expand/collapse nested JSON data in a tree view and copy values to clipboard
@@ -110,12 +122,13 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. App Shell & Navigation | 6/6 | Complete | 2026-04-10 |
-| 2. EC2 Dashboard & CRUD Patterns | 0/9 | In progress | - |
-| 3. S3 & Lambda Services | 0/TBD | Not started | - |
-| 4. DynamoDB, SQS & Generic Framework | 0/TBD | Not started | - |
-| 5. Data Display Quality & Differentiators | 0/TBD | Not started | - |
+| 2. EC2 Dashboard & CRUD Patterns | 9/9 | Complete | 2026-04-16 |
+| 3. S3 Service | 6/6 | Complete | 2026-04-17 |
+| 4. Lambda Service | 0/TBD | Not started | - |
+| 5. DynamoDB, SQS & Generic Framework | 0/TBD | Not started | - |
+| 6. Data Display Quality & Differentiators | 0/TBD | Not started | - |
