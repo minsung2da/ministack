@@ -639,27 +639,27 @@ export function useDeleteBucket() {
 | A6 | Phase 2 `ResourceTable`, `DeleteModal`, `CreateModal`, `SplitPanelDetail`, `FlashNotifications` components are generic enough to reuse directly in S3 (not EC2-specific logic embedded) | Architecture Patterns | May need to duplicate or refactor into `services/shared/`. Review each component's API in Wave 0 — if any has EC2-specific props or copy, decide per-component whether to import-as-is, extend, or duplicate. [ASSUMED — planner must verify by reading each file] |
 | A7 | No backend changes required for Phase 3 S3 | Summary | If backend is missing something (e.g., CORS header on GetObject for browser download), need a quick backend patch. Mitigation: Wave 0 smoke test hitting `/` from Vite dev server (port 5566 → 4566 proxy) for each of ListBuckets, PutObject, GetObject confirms viability. [ASSUMED] |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Should Phase 2 components be extracted to `services/shared/components/` now?**
    - What we know: `ResourceTable`, `DeleteModal`, `CreateModal`, `SplitPanelDetail`, `FlashNotifications`, `StatusBadge` exist under `services/ec2/components/`.
    - What's unclear: Whether they use EC2-specific copy strings, types, or `applyNameTag` logic internally.
-   - Recommendation: Planner spike as Task 1 — read each file, decide per component: (a) reuse as-is by importing from `../../ec2/components/`, (b) extract to `services/shared/components/`, or (c) duplicate with S3 adaptations. Default to (a) for minimal risk; escalate to (b) only if an S3 copy-string conflict forces divergence. Track (c) as tech debt to resolve in Phase 4.
+   - **RESOLVED:** Planner spike as Task 1 — read each file, decide per component: (a) reuse as-is by importing from `../../ec2/components/`, (b) extract to `services/shared/components/`, or (c) duplicate with S3 adaptations. Default to (a) for minimal risk; escalate to (b) only if an S3 copy-string conflict forces divergence. Track (c) as tech debt to resolve in Phase 4.
 
 2. **Does the MiniStack vite dev server proxy S3 PUT/DELETE through correctly?**
    - What we know: Phase 1 proved `/` POST (EC2 Query) works through the proxy; console API `/_console/api/*` works.
    - What's unclear: Whether raw PUT `/{bucket}/{key}` with binary body traverses Vite proxy unchanged.
-   - Recommendation: Wave 0 smoke: a 1 KB PutObject + GetObject round-trip. If Vite proxy corrupts binary body, switch dev to talk direct to :4566 via CORS or run backend separately.
+   - **RESOLVED:** Wave 0 smoke: a 1 KB PutObject + GetObject round-trip. If Vite proxy corrupts binary body, switch dev to talk direct to :4566 via CORS or run backend separately.
 
 3. **Is there an existing `FileUpload` Cloudscape component that fits better than a custom `<input type="file">`?**
    - What we know: UI-SPEC line 143 mentions `FileUpload` as "optional: Cloudscape's built-in file picker component ... prefer this over a raw `<input type="file">` for visual consistency."
    - What's unclear: Whether Cloudscape `FileUpload` integrates with a programmatic "Upload" button in Header actions (it normally renders its own UI).
-   - Recommendation: Planner evaluates in implementation. A plain hidden `<input type="file" multiple />` + click from the Cloudscape `Button` is the simplest path and matches UI-SPEC Interaction Contract line 862.
+   - **RESOLVED:** Planner evaluates in implementation. A plain hidden `<input type="file" multiple />` + click from the Cloudscape `Button` is the simplest path and matches UI-SPEC Interaction Contract line 862.
 
 4. **Should the `..` parent row be rendered inside the Table or as a separate row above?**
    - What we know: UI-SPEC line 399 specifies synthetic row with `name: '..'`, `type: 'folder'`, no checkbox, not filterable, not selectable, navigates on click.
    - What's unclear: Cloudscape Table doesn't natively support a "pinned" un-selectable row. Options: (a) include `..` in `items` array with a sentinel key and suppress selection/filter via cell-render branches, (b) render `..` outside Table as a separate interactive row above it.
-   - Recommendation: Option (a) — single Table, sentinel key `__parent__`, column renderers skip action icons and filter predicate ignores it. Avoid rendering outside the Table to keep focus/keyboard behavior consistent.
+   - **RESOLVED:** Option (a) — single Table, sentinel key `__parent__`, column renderers skip action icons and filter predicate ignores it. Avoid rendering outside the Table to keep focus/keyboard behavior consistent.
 
 ## Validation Architecture
 
