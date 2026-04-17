@@ -160,4 +160,160 @@ export const copy = {
   ec2NoMatchBody: (resource: string) =>
     `No ${resource} match the selected filters.`,
   ec2NoMatchCta: 'Clear filters',
+
+  // ── Phase 3 — S3 ──────────────────────────────────────────────────────────────
+  s3: {
+    // Page-level
+    serviceHeading: 'S3',
+    serviceDescription: 'Manage buckets and objects.',
+    objectBrowserHeading: (bucketName: string) => bucketName,
+
+    // Bucket list
+    bucketsTableHeader: (count: number) => `Buckets (${count})`,
+    bucketsFilterPlaceholder: 'Find buckets',
+    bucketsEmptyHeading: 'No buckets',
+    bucketsEmptyBody:
+      'You have no S3 buckets. Create a bucket to store objects.',
+    bucketsEmptyCta: 'Create bucket',
+    bucketsNoMatchHeading: 'No matches',
+    bucketsNoMatchBody: 'No buckets match the filter.',
+    bucketsNoMatchCta: 'Clear filter',
+    bucketsLoadErrorHeading: 'Could not load buckets',
+    bucketsLoadErrorBody:
+      'MiniStack returned an error while fetching buckets. Check that the S3 service is enabled and try again.',
+    bucketsLoadErrorRetry: 'Retry',
+
+    // Create Bucket modal
+    createBucketHeader: 'Create bucket',
+    createBucketNameLabel: 'Bucket name',
+    createBucketNameHelp:
+      '3-63 characters, lowercase letters, numbers, and hyphens only.',
+    createBucketNamePlaceholder: 'my-bucket-name',
+    createBucketButton: 'Create bucket',
+    createBucketCancel: 'Cancel',
+    createBucketSuccess: (bucketName: string) =>
+      `Bucket ${bucketName} created successfully.`,
+
+    // Delete bucket
+    deleteBucketHeader: 'Delete bucket',
+    deleteBucketBody: (bucketName: string) =>
+      `Are you sure you want to delete bucket ${bucketName}? The bucket must be empty before it can be deleted. This action cannot be undone.`,
+    deleteBucketConfirmPrompt: (bucketName: string) =>
+      `To confirm deletion, type "${bucketName}"`,
+    deleteBucketCta: 'Delete',
+    deleteBucketCancel: 'Cancel',
+    bulkDeleteBucketsHeader: (count: number) => `Delete ${count} buckets`,
+    bulkDeleteBucketsBody: (count: number) =>
+      `Are you sure you want to delete these ${count} buckets? Each bucket must be empty before it can be deleted. This action cannot be undone.`,
+    bulkDeleteBucketsConfirmPrompt: 'To confirm deletion, type "delete"',
+    bulkDeleteBucketsCta: 'Delete',
+    deleteBucketSuccess: (bucketName: string) =>
+      `Bucket ${bucketName} deleted successfully.`,
+    bulkDeleteBucketsSuccess: (count: number) =>
+      `${count} buckets deleted successfully.`,
+    deleteBucketNotEmpty: (bucketName: string) =>
+      `Cannot delete bucket ${bucketName}: bucket is not empty. Delete all objects first.`,
+
+    // Object browser
+    objectsTableHeader: (count: number) => `Objects (${count})`,
+    objectsFilterPlaceholder: 'Find objects by name',
+    objectsParentRowName: '..',
+    emptyBucketHeading: 'Empty bucket',
+    emptyBucketBody:
+      'Drag files here to upload, or use the Upload button above.',
+    emptyBucketCta: 'Upload',
+    emptyPrefixHeading: 'No objects in this folder',
+    emptyPrefixBody:
+      'This folder has no objects. Drag files here or upload to a different prefix.',
+    objectsNoMatchHeading: 'No matches',
+    objectsNoMatchBody: 'No objects on this page match the filter.',
+    objectsNoMatchCta: 'Clear filter',
+    objectsLoadErrorHeading: 'Could not load objects',
+    objectsLoadErrorBody: (bucketName: string) =>
+      `MiniStack returned an error while fetching objects from ${bucketName}. Check that the S3 service is enabled and try again.`,
+    objectsLoadErrorRetry: 'Retry',
+    dropZoneOverlayRoot: 'Drop files to upload to bucket root',
+    dropZoneOverlayWithPrefix: (currentPrefix: string) =>
+      `Drop files to upload to ${currentPrefix}`,
+    dropZoneAria: 'Drop files to upload',
+
+    // Upload
+    uploadButton: 'Upload',
+    uploadQueuedHeader: (filename: string) => `Queued: ${filename}`,
+    uploadQueuedBody: 'Waiting to start',
+    uploadInProgressHeader: (filename: string) => `Uploading: ${filename}`,
+    uploadInProgressBody: (percent: number, uploaded: string, total: string) =>
+      `${percent}% — ${uploaded} of ${total}`,
+    uploadSuccessHeader: (filename: string) => `Uploaded: ${filename}`,
+    uploadSuccessBody: (bucketName: string, fullKey: string) =>
+      `Uploaded to s3://${bucketName}/${fullKey}`,
+    uploadFailureHeader: (filename: string) => `Upload failed: ${filename}`,
+    uploadFailureBody: (errorMessage: string) => errorMessage,
+    uploadRetryLink: 'Retry',
+    uploadCancelledHeader: (filename: string) =>
+      `Upload cancelled: ${filename}`,
+    uploadCancelledBody: 'Upload was cancelled before completion.',
+    uploadCancelButton: 'Cancel',
+
+    // Download
+    downloadButton: 'Download',
+    downloadInProgressHeader: (filename: string) => `Downloading: ${filename}`,
+    downloadSuccessHeader: (filename: string) => `Downloaded: ${filename}`,
+    downloadFailureHeader: 'Could not download object',
+    downloadFailureBody: (objectKey: string, errorMessage: string) =>
+      `Failed to download ${objectKey}: ${errorMessage}`,
+
+    // Object detail
+    splitPanelTabProperties: 'Properties',
+    splitPanelTabMetadata: 'Metadata',
+    splitPanelTabTags: 'Tags',
+    metadataEmpty: 'No user metadata set for this object.',
+    tagsEmpty: 'No tags on this object.',
+    propertyKey: 'Key',
+    propertySize: 'Size',
+    propertyContentType: 'Content type',
+    propertyLastModified: 'Last modified',
+    propertyEtag: 'ETag',
+    propertyStorageClass: 'Storage class',
+    copyKeyButton: 'Copy key',
+    copyS3UriButton: 'Copy S3 URI',
+    copyBucketNameButton: 'Copy bucket name',
+
+    // Object delete
+    deleteObjectHeader: 'Delete object',
+    deleteObjectBody: (fullObjectKey: string) =>
+      `Are you sure you want to delete ${fullObjectKey}? This action cannot be undone.`,
+    deleteObjectConfirmPrompt: (fullObjectKey: string) =>
+      `To confirm deletion, type "${fullObjectKey}"`,
+    deleteObjectCta: 'Delete',
+    bulkDeleteObjectsHeader: (count: number) => `Delete ${count} objects`,
+    bulkDeleteObjectsBody: (count: number) =>
+      `Are you sure you want to delete these ${count} objects? This action cannot be undone.`,
+    bulkDeleteObjectsConfirmPrompt: 'To confirm deletion, type "delete"',
+    bulkDeleteObjectsCta: 'Delete',
+    deleteObjectSuccess: (objectKey: string) =>
+      `Object ${objectKey} deleted successfully.`,
+    bulkDeleteObjectsSuccess: (count: number) =>
+      `${count} objects deleted successfully.`,
+    partialBulkDeleteFailure: (failedCount: number, totalCount: number) =>
+      `Failed to delete ${failedCount} of ${totalCount} objects.`,
+    deleteObjectFailure: (objectKey: string, errorMessage: string) =>
+      `Failed to delete ${objectKey}: ${errorMessage}`,
+
+    // Miscellaneous
+    refreshTooltip: 'Refresh',
+    preferencesButton: 'Preferences',
+    pageSizeLabel: 'Page size',
+    actionsDropdownButton: 'Actions',
+    previousPageButton: 'Previous',
+    nextPageButton: 'Next',
+    splitPanelCloseLabel: 'Close panel',
+    bucketDetailTabProperties: 'Properties',
+    bucketPropertyName: 'Name',
+    bucketPropertyRegion: 'Region',
+    bucketPropertyCreationDate: 'Creation date',
+    bucketPropertyObjects: 'Objects',
+    loadingBuckets: 'Loading buckets',
+    loadingObjects: 'Loading objects',
+  },
 } as const

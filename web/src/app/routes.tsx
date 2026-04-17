@@ -30,6 +30,11 @@ const NetworkInterfacesTab = lazy(
 )
 const InstanceWizard = lazy(() => import('../services/ec2/pages/InstanceWizard'))
 
+// Phase 3 — S3 routes
+const S3Layout = lazy(() => import('../services/s3/S3Layout'))
+const BucketListPage = lazy(() => import('../services/s3/BucketListPage'))
+const ObjectBrowserPage = lazy(() => import('../services/s3/ObjectBrowserPage'))
+
 function withSuspense(node: ReactNode): ReactNode {
   return <Suspense fallback={<Spinner size="large" />}>{node}</Suspense>
 }
@@ -94,6 +99,18 @@ export const routes: RouteObject[] = [
           {
             path: 'network-interfaces',
             element: withSuspense(<NetworkInterfacesTab />),
+          },
+        ],
+      },
+      // S3 routes MUST appear BEFORE services/:serviceKey wildcard (Pitfall 5)
+      {
+        path: 'services/s3',
+        element: withSuspense(<S3Layout />),
+        children: [
+          { index: true, element: withSuspense(<BucketListPage />) },
+          {
+            path: ':bucketName',
+            element: withSuspense(<ObjectBrowserPage />),
           },
         ],
       },
