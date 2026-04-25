@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 2: EC2 Dashboard & CRUD Patterns** - Full EC2 service UI proving all CRUD patterns (tables, detail, create, delete, actions)
 - [x] **Phase 3: S3 Service** - S3 bucket/object browser with prefix navigation, drag-and-drop upload, download, metadata/tags (S3-01 through S3-04)
 - [ ] **Phase 4: Lambda Service** - Lambda function list, configuration/environment/triggers detail, test invocation with JSON payload (LAM-01 through LAM-03)
-- [ ] **Phase 5: DynamoDB, SQS & Generic Framework** - Schema-driven generic components validated by building DDB and SQS UIs with them
+- [x] **Phase 5: DynamoDB, SQS & Generic Framework** - Schema-driven generic components validated by building DDB and SQS UIs with them
 - [ ] **Phase 6: Data Display Quality & Differentiators** - Cross-cutting UX polish (JSON tree, timestamps, loading states, errors) and unique features (reset, dark mode)
 
 ## Phase Details
@@ -130,5 +130,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4 -> 5 -> 6
 | 2. EC2 Dashboard & CRUD Patterns | 9/9 | Complete | 2026-04-16 |
 | 3. S3 Service | 6/6 | Complete | 2026-04-17 |
 | 4. Lambda Service | 0/TBD | Not started | - |
-| 5. DynamoDB, SQS & Generic Framework | 0/TBD | Not started | - |
+| 5. DynamoDB, SQS & Generic Framework | 8/8 | Complete | 2026-04-24 |
 | 6. Data Display Quality & Differentiators | 0/TBD | Not started | - |
