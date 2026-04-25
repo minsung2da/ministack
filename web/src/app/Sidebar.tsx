@@ -44,6 +44,37 @@ export function Sidebar() {
         })),
       })
     }
+    // Phase 5 — SQS + Generic framework services (Plan 05-06).
+    // Rendered as a static section so the descriptor-driven services are
+    // always reachable even if the backend /services registry omits them.
+    // Only add entries whose key isn't already present in the backend list
+    // (dedupe) — backend-supplied SQS/IAM should not double-render.
+    const knownKeys = new Set(services.map((s) => s.key))
+    const extras: SideNavigationProps.Link[] = []
+    const maybeAdd = (text: string, href: string, key: string) => {
+      if (!knownKeys.has(key)) {
+        extras.push({ type: 'link', text, href })
+      }
+    }
+    maybeAdd('SQS', '/services/sqs', 'sqs')
+    maybeAdd('IAM · Users', '/services/iam.users', 'iam.users')
+    maybeAdd('IAM · Roles', '/services/iam.roles', 'iam.roles')
+    maybeAdd('IAM · Policies', '/services/iam.policies', 'iam.policies')
+    maybeAdd('STS', '/services/sts', 'sts')
+    maybeAdd(
+      'Secrets Manager',
+      '/services/secretsmanager',
+      'secretsmanager',
+    )
+    maybeAdd('Systems Manager', '/services/ssm', 'ssm')
+    maybeAdd('KMS', '/services/kms', 'kms')
+    if (extras.length > 0) {
+      sections.push({
+        type: 'section',
+        text: 'Messaging & Identity',
+        items: extras,
+      })
+    }
     return sections
   }, [services])
 

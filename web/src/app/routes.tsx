@@ -35,6 +35,26 @@ const S3Layout = lazy(() => import('../services/s3/S3Layout'))
 const BucketListPage = lazy(() => import('../services/s3/BucketListPage'))
 const ObjectBrowserPage = lazy(() => import('../services/s3/ObjectBrowserPage'))
 
+// Phase 4 — Lambda routes
+const LambdaLayout = lazy(() => import('../services/lambda/LambdaLayout'))
+const FunctionListPage = lazy(() => import('../services/lambda/FunctionListPage'))
+const FunctionDetailPage = lazy(
+  () => import('../services/lambda/FunctionDetailPage'),
+)
+
+// Phase 5 — DynamoDB routes
+const DDBLayout = lazy(() => import('../services/ddb/DDBLayout'))
+const TableListPage = lazy(() => import('../services/ddb/TableListPage'))
+const TableDetailPage = lazy(() => import('../services/ddb/TableDetailPage'))
+
+// Phase 5 — SQS routes (Plan 05-06)
+const SQSLayout = lazy(() => import('../services/sqs/SQSLayout'))
+const QueueListPage = lazy(() => import('../services/sqs/QueueListPage'))
+const QueueDetailPage = lazy(() => import('../services/sqs/QueueDetailPage'))
+
+// Phase 5 — Generic descriptor-driven router (Plan 05-06)
+const GenericRouter = lazy(() => import('../services/_generic/GenericRouter'))
+
 function withSuspense(node: ReactNode): ReactNode {
   return <Suspense fallback={<Spinner size="large" />}>{node}</Suspense>
 }
@@ -113,6 +133,96 @@ export const routes: RouteObject[] = [
             element: withSuspense(<ObjectBrowserPage />),
           },
         ],
+      },
+      // Lambda routes MUST appear BEFORE services/:serviceKey wildcard (Pitfall C-1)
+      {
+        path: 'services/lambda',
+        element: withSuspense(<LambdaLayout />),
+        children: [
+          { index: true, element: withSuspense(<FunctionListPage />) },
+          {
+            path: ':functionName',
+            element: withSuspense(<FunctionDetailPage />),
+          },
+        ],
+      },
+      // DDB routes MUST appear BEFORE services/:serviceKey wildcard (Pitfall C-1)
+      {
+        path: 'services/ddb',
+        element: withSuspense(<DDBLayout />),
+        children: [
+          { index: true, element: withSuspense(<TableListPage />) },
+          {
+            path: ':tableName',
+            element: withSuspense(<TableDetailPage />),
+          },
+        ],
+      },
+      // SQS routes — BEFORE services/:serviceKey wildcard (Pitfall C-1)
+      {
+        path: 'services/sqs',
+        element: withSuspense(<SQSLayout />),
+        children: [
+          { index: true, element: withSuspense(<QueueListPage />) },
+          {
+            path: ':queueName',
+            element: withSuspense(<QueueDetailPage />),
+          },
+        ],
+      },
+      // Generic descriptor-driven services — explicit paths BEFORE :serviceKey
+      // wildcard (Pitfall C-1). Each resolves to GenericRouter which looks up
+      // the descriptor and dispatches by kind (list vs singleton).
+      {
+        path: 'services/iam.users',
+        element: withSuspense(<GenericRouter serviceKey="iam.users" />),
+        children: [
+          { path: ':id', element: withSuspense(<GenericRouter serviceKey="iam.users" />) },
+        ],
+      },
+      {
+        path: 'services/iam.roles',
+        element: withSuspense(<GenericRouter serviceKey="iam.roles" />),
+        children: [
+          { path: ':id', element: withSuspense(<GenericRouter serviceKey="iam.roles" />) },
+        ],
+      },
+      {
+        path: 'services/iam.policies',
+        element: withSuspense(<GenericRouter serviceKey="iam.policies" />),
+        children: [
+          { path: ':id', element: withSuspense(<GenericRouter serviceKey="iam.policies" />) },
+        ],
+      },
+      {
+        path: 'services/sts',
+        element: withSuspense(<GenericRouter serviceKey="sts" />),
+      },
+      {
+        path: 'services/secretsmanager',
+        element: withSuspense(<GenericRouter serviceKey="secretsmanager" />),
+        children: [
+          { path: ':id', element: withSuspense(<GenericRouter serviceKey="secretsmanager" />) },
+        ],
+      },
+      {
+        path: 'services/ssm',
+        element: withSuspense(<GenericRouter serviceKey="ssm" />),
+        children: [
+          { path: ':id', element: withSuspense(<GenericRouter serviceKey="ssm" />) },
+        ],
+      },
+      {
+        path: 'services/kms',
+        element: withSuspense(<GenericRouter serviceKey="kms" />),
+        children: [
+          { path: ':id', element: withSuspense(<GenericRouter serviceKey="kms" />) },
+        ],
+      },
+      // D-09: bare /services/iam → redirect to Users
+      {
+        path: 'services/iam',
+        element: <Navigate to="/_console/services/iam.users" replace />,
       },
       {
         path: 'services/:serviceKey',
